@@ -11,11 +11,10 @@ You can install the package via composer:
 composer require filahq/filament-assist
 ```
 
-You can publish and run the migrations with:
+You can run the install command:
 
 ```bash
-php artisan vendor:publish --tag="filament-assist-migrations"
-php artisan migrate
+php artisan filament-assist:install
 ```
 
 ## Usage
