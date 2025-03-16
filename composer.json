@@ -1,0 +1,44 @@
+{
+    "name": "filahq/filament-assist",
+    "description": "Filament Assit to create Action with modal form for support / feedback / bug report",
+    "keywords": [
+        "FilaHQ",
+        "filament actions",
+        "filament-assist"
+    ],
+    "homepage": "https://github.com/filahq/filament-assist",
+    "support": {
+        "issues": "https://github.com/filahq/filament-assist/issues",
+        "source": "https://github.com/filahq/filament-assist"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Knight Tan",
+            "email": "knight@filahq.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "filament/filament": "^3.0",
+        "spatie/laravel-package-tools": "^1.15.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "FilaHQ\\FilamentAssist\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "FilaHQ\\FilamentAssist\\FilamentAssistServiceProvider"
+            ],
+            "aliases": {
+                "FilamentAssist": "FilaHQ\\FilamentAssist\\Facades\\FilamentAssist"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
