@@ -5,6 +5,8 @@ namespace FilaHQ\FilamentAssist;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Livewire\Livewire;
+use FilaHQ\FilamentAssist\Livewire\AssistComponent;
 
 class FilamentAssistServiceProvider extends PackageServiceProvider
 {
@@ -45,9 +47,14 @@ class FilamentAssistServiceProvider extends PackageServiceProvider
         //     $package->hasTranslations();
         // }
 
-        // if (file_exists($package->basePath('/../resources/views'))) {
-        //     $package->hasViews(static::$viewNamespace);
-        // }
+        if (file_exists($package->basePath('/../resources/views'))) {
+            $package->hasViews(static::$viewNamespace);
+        }
+    }
+
+    public function packageBooted(): void
+    {
+        Livewire::component('assist', AssistComponent::class);
     }
 
     public function packageRegistered(): void {}

@@ -9,6 +9,8 @@ use FilaHQ\FilamentAssist\Models\Assist;
 
 class AssistAction extends Action
 {
+    public $type = 'assist';
+
     public static function getDefaultName(): ?string
     {
         return 'assist';
@@ -30,10 +32,20 @@ class AssistAction extends Action
         ];
     }
 
+    public function defaultAssistType(string $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
     protected function assist(array $data, $livewire): void
     {
+        $type = filament()->hasPlugin('filament-assist')
+            ? filament('filament-assist')->type()
+            : $this->type;
         $data['user_id'] = auth()->user()->id;
-        $data['type'] = filament('filament-assist')->type();
+        $data['type'] = $type;
         $data['source'] = $livewire->getName();
         Assist::create($data);
     }
