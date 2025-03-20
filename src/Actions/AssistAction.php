@@ -6,10 +6,12 @@ use Filament\Actions\Action;
 use Filament\Forms\Components;
 use Filament\Support\Enums\MaxWidth;
 use FilaHQ\FilamentAssist\Models\Assist;
+use Closure;
 
 class AssistAction extends Action
 {
-    public $type = 'assist';
+    protected string $type = 'assist';
+    protected string|Closure|null $source = null;
 
     public static function getDefaultName(): ?string
     {
@@ -39,6 +41,18 @@ class AssistAction extends Action
         return $this;
     }
 
+    public function source(string|Closure|null $source = null): static
+    {
+        $this->source = $source;
+
+        return $this;
+    }
+
+    public function getSource(): ?string
+    {
+        return $this->evaluate($this->source);
+    }
+
     protected function assist(array $data, $livewire): void
     {
         $type = filament()->hasPlugin('filament-assist')
@@ -46,7 +60,7 @@ class AssistAction extends Action
             : $this->type;
         $data['user_id'] = auth()->user()->id;
         $data['type'] = $type;
-        $data['source'] = $livewire->getName();
+        $data['source'] = $this->getSource() ?? $livewire->getName();
         Assist::create($data);
     }
 }

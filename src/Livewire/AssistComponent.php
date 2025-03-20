@@ -17,12 +17,19 @@ class AssistComponent extends Component implements HasForms, HasActions
 
     public string $label = 'Assist';
     public string $type = 'assist';
+    public ?string $source = '';
 
     public function componentAction(): Action
     {
-        return AssistAction::make('component')
+        $action = AssistAction::make('component')
             ->label($this->label)
             ->defaultAssistType($this->type);
+
+        if (!empty($this->source)) {
+            $action->source($this->source);
+        }
+
+        return $action;
     }
 
     public function render(): View
