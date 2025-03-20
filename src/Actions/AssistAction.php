@@ -6,6 +6,7 @@ use Filament\Actions\Action;
 use Filament\Forms\Components;
 use Filament\Support\Enums\MaxWidth;
 use FilaHQ\FilamentAssist\Models\Assist;
+use Filament\Notifications\Notification;
 use Closure;
 
 class AssistAction extends Action
@@ -62,5 +63,9 @@ class AssistAction extends Action
         $data['type'] = $type;
         $data['source'] = $this->getSource() ?? $livewire->getName();
         Assist::create($data);
+        Notification::make()
+            ->title(ucfirst($this->label ?? $this->name) . ' sent successfully')
+            ->success()
+            ->send();
     }
 }
