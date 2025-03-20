@@ -17,60 +17,58 @@ You can run the install command:
 php artisan filament-assist:install
 ```
 
-## Usage
+## Setup
 
-### Register Plugin for Assist Resource
+### 1. Register the Plugin
+
+Add the following code to your panel provider to register the plugin and enable access to all assist resources in your Filament panel:
 
 ```php
-<?php
- 
-namespace App\Providers\Filament;
- 
-use Filament\Panel;
-use Filament\PanelProvider;
-use Filament\Actions\Action;
 use FilaHQ\FilamentAssist\FilamentAssistPlugin;
- 
+
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            // ...
             ->plugins([
-               FilamentAssistPlugin::make()
-            ])
+                FilamentAssistPlugin::make()
+            ]);
     }
 }
-
 ```
 
-### defaultAssistType for the default type of each assist
+### 2. Choose How to Display
 
+You have two ways to add the assist form:
+
+#### Option 1: As a Page Action
 ```php
-
-    FilamentAssistPlugin::make()->defaultAssistType("support")
-
-```
-
-### Add to Page Actions
-
-```php
-<?php
-
-namespace App\Filament\Pages;
-
-use Filament\Pages\Page;
 use FilaHQ\FilamentAssist\Actions\AssistAction;
 
-class Beta extends Page
+class YourPage extends Page
 {
     protected function getHeaderActions(): array
     {
-        return [AssistAction::make()];
+        return [
+            AssistAction::make()
+        ];
     }
 }
+```
 
+#### Option 2: As a Livewire Component
+```php
+// In your blade file
+<livewire:assist label="Get Help" type="support">
+```
+
+### 3. Customize (Optional)
+
+Set a default assist type:
+```php
+FilamentAssistPlugin::make()
+    ->defaultAssistType("support")
 ```
 
 ## Changelog
